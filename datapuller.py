@@ -20,9 +20,19 @@ from tldextract import extract
 #https://gothiclandscape.com/
 urls = ['https://www.ruppertlandscape.com/branches/']
 
-#1--30 -40
-#2--
 
+
+#Generate output file 
+def csvwriter(to_csv):
+    filename = "output.csv"
+    fields =  ["Parent Company", "Sub-Brand (if relevant)", 
+     "Branch Type (If relevant)", "Street", "City", "State", "Zip Code", "Other Comments", "Link"]
+    with open(filename, 'w', newline = '') as csvfile: 
+        # creating a csv writer object 
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(fields)
+        csvwriter.writerows(to_csv)
+#get the preprocessed names
 def get_options(scrambled, flag, totals, last):
     dictionary = [i.strip('\n') for i in open('the_file.txt')]
     if flag:
@@ -37,17 +47,6 @@ def get_options(scrambled, flag, totals, last):
             return get_options(new_scrambled, False, new_totals, possible_word)
         else:
             return get_options("", True, totals, '')
-
-#Generate output file 
-def csvwriter(to_csv):
-    filename = "output.csv"
-    fields =  ["Parent Company", "Sub-Brand (if relevant)", 
-     "Branch Type (If relevant)", "Street", "City", "State", "Zip Code", "Other Comments", "Link"]
-    with open(filename, 'w', newline = '') as csvfile: 
-        # creating a csv writer object 
-        csvwriter = csv.writer(csvfile)
-        csvwriter.writerow(fields)
-        csvwriter.writerows(to_csv)
 
 #create treee structure to process the input urls
 #https://www.marianilandscape.com/where-we-are/
